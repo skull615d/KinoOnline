@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.ldev.kinoonline.databinding.ItemMoveMainBinding
+import com.ldev.kinoonline.databinding.ItemMovieMainBinding
+import com.ldev.kinoonline.feature.base.loadImage
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 
-class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
+class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
 
     private val diffCallback = object : DiffUtil.ItemCallback<Movie>() {
-
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie) =
             oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie) =
-            oldItem.title == newItem.title
+            oldItem == newItem
     }
 
     val differ = AsyncListDiffer(this, diffCallback)
@@ -26,7 +26,7 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
         viewType: Int
     ): MoviesAdapter.ItemViewHolder {
         val binding =
-            ItemMoveMainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemMovieMainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
@@ -39,11 +39,12 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
         holder.bind(item)
     }
 
-    inner class ItemViewHolder(private val binding: ItemMoveMainBinding) :
+    inner class ItemViewHolder(private val binding: ItemMovieMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(item: Movie){
-                binding.tvTitle.text = item.title
-            }
+        fun bind(item: Movie) {
+            binding.tvTitle.text = item.title
+            binding.ivMovieImage.loadImage(item.posterPath)
+        }
     }
 }
