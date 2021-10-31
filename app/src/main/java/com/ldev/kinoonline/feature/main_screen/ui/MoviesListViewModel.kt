@@ -1,11 +1,14 @@
 package com.ldev.kinoonline.feature.main_screen.ui
 
-import android.provider.ContactsContract
 import com.ldev.kinoonline.feature.base.BaseViewModel
 import com.ldev.kinoonline.feature.base.Event
+import com.ldev.kinoonline.feature.base.SingleLiveEvent
 import com.ldev.kinoonline.feature.main_screen.domain.MoviesInteractor
 
 class MoviesListViewModel(private val interactor: MoviesInteractor) : BaseViewModel<ViewState>() {
+
+    val singleLiveEvent = SingleLiveEvent<SingleEvent>()
+
     override fun initialViewState(): ViewState {
         return ViewState(emptyList(), true, "")
     }
@@ -22,6 +25,9 @@ class MoviesListViewModel(private val interactor: MoviesInteractor) : BaseViewMo
                         processDataEvent(DataEvent.ErrorMoviesRequest(it.localizedMessage ?: ""))
                     }
                 )
+            }
+            is UiEvent.OnCardMovieClick -> {
+                singleLiveEvent.value = SingleEvent.OpenMovieCard(event.movie)
             }
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(

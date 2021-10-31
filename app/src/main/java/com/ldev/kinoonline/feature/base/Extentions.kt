@@ -6,6 +6,8 @@ import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.ldev.kinoonline.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun ImageView.loadImage(
     src: String?,
@@ -20,4 +22,17 @@ fun ImageView.loadImage(
         .placeholder(placeholderRes)
         .apply { config(this) }
         .into(this)
+}
+
+fun String.toCalendar(dateFormat: String = "yyyy-MM-dd"): Calendar? {
+    val calendar = Calendar.getInstance()
+    val parser = SimpleDateFormat(dateFormat, Locale.getDefault())
+    parser.parse(this)?.let { calendar.time = it }
+    if (calendar == Calendar.getInstance()) return null
+    return calendar
+}
+
+fun Calendar?.toStringFormat(format: String = "dd.MM.yyyy HH:mm"): String {
+    val formatter = SimpleDateFormat(format, Locale.getDefault())
+    return this?.time.let { formatter.format(it) }
 }

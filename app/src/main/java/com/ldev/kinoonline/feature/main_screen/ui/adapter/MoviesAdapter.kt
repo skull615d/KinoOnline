@@ -3,23 +3,17 @@ package com.ldev.kinoonline.feature.main_screen.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ldev.kinoonline.databinding.ItemMovieMainBinding
 import com.ldev.kinoonline.feature.base.loadImage
+import com.ldev.kinoonline.feature.base.toStringFormat
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
+class MoviesAdapter(
+    private val onMovieCardClick: (movie: Movie) -> Unit
+) : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie) =
-            oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie) =
-            oldItem == newItem
-    }
-
-    val differ = AsyncListDiffer(this, diffCallback)
+    val differ = AsyncListDiffer(this, DiffCallback())
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -43,8 +37,13 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Movie) {
-            binding.tvTitle.text = item.title
-            binding.ivMovieImage.loadImage(item.posterPath)
+            binding.apply {
+                tvYear.text = item.releaseDate?.toStringFormat("yyyy") ?: ""
+                tvVoteAverage.text = item.voteAverage.toString()
+                ivMovieImage.loadImage(item.posterPath)
+                cardView.setOnClickListener { onMovieCardClick(item) }
+            }
         }
+
     }
 }

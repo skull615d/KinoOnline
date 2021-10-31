@@ -1,5 +1,6 @@
 package com.ldev.kinoonline.feature.main_screen.data
 
+import com.ldev.kinoonline.feature.base.toCalendar
 import com.ldev.kinoonline.feature.main_screen.data.api.model.GenreModel
 import com.ldev.kinoonline.feature.main_screen.data.api.model.MainModel
 import com.ldev.kinoonline.feature.main_screen.data.api.model.MoveModel
@@ -18,7 +19,7 @@ fun MoveModel.toDomain() = Movie(
     originalLanguage,
     originalTitle,
     overview,
-    releaseDate,
+    releaseDate.toCalendar(),
     posterPath,
     popularity,
     title,
