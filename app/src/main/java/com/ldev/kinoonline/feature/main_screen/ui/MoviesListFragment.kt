@@ -39,7 +39,7 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         when (event) {
             is SingleEvent.OpenMovieCard -> {
                 parentFragmentManager.beginTransaction()
-                    .replace(
+                    .add(
                         R.id.mainContainer,
                         MovieCardFragment.newInstance(event.movie, event.similarMovies)
                     )

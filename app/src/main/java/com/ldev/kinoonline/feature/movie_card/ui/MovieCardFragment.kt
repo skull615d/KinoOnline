@@ -10,6 +10,7 @@ import com.ldev.kinoonline.databinding.FragmentMovieCardBinding
 import com.ldev.kinoonline.feature.base.loadImage
 import com.ldev.kinoonline.feature.base.toStringFormat
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
+import com.ldev.kinoonline.feature.player.ui.PlayerFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
@@ -21,7 +22,6 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
         }
     }
 
-    private val viewModel by viewModel<MovieCardViewModel>()
     private val binding by viewBinding(FragmentMovieCardBinding::bind)
     private val movie: Movie by lazy { requireArguments().getParcelable(KEY_MOVIE)!! }
     private val similarMovies: List<Movie> by lazy {
@@ -32,7 +32,6 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.singleLiveEvent.observe(viewLifecycleOwner, ::onSingleEvent)
         binding.apply {
             motionContainer.transitionToEnd()
             ivImageToolbar.loadImage(movie.posterPath)
@@ -45,14 +44,6 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
             tvOverview.text = overview
             tvVoteAverage.text =
                 getString(R.string.vote_average_count, movie.voteAverage, movie.voteCount)
-        }
-    }
-
-    private fun onSingleEvent(event: SingleEvent) {
-        when (event) {
-            is SingleEvent.OpenPlayer -> {
-                
-            }
         }
     }
 }
