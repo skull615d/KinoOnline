@@ -22,6 +22,7 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
         }
     }
 
+    private val viewModel by viewModel<MovieCardViewModel>()
     private val binding by viewBinding(FragmentMovieCardBinding::bind)
     private val movie: Movie by lazy { requireArguments().getParcelable(KEY_MOVIE)!! }
     private val similarMovies: List<Movie> by lazy {
@@ -32,7 +33,9 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.singleLiveEvent.observe(viewLifecycleOwner, ::onSingeEvent)
         binding.apply {
+            bPlay.setOnClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(movie.video)) }
             motionContainer.transitionToEnd()
             ivImageToolbar.loadImage(movie.posterPath)
             tvTitle.text = movie.title
@@ -44,6 +47,20 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
             tvOverview.text = overview
             tvVoteAverage.text =
                 getString(R.string.vote_average_count, movie.voteAverage, movie.voteCount)
+        }
+    }
+
+    private fun onSingeEvent(event: SingleEvent) {
+        when (event) {
+            is SingleEvent.OpenPlayer -> {
+                parentFragmentManager.beginTransaction()
+                    .add(R.id.mainContainer, PlayerFragment.newInstance(event.movieUrl))
+                    .addToBackStack("movieCard")
+                    .commit()
+            }
+            is SingleEvent.OpenMovieCard -> {
+
+            }
         }
     }
 }
