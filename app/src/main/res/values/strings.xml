@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">KinoOnline</string>
     <string name="Recommendations">Recommended</string>
+    <string name="year">Year: %s</string>
+    <string name="genre">Genre: %s</string>
+    <string name="vote_average_count">%.1f (%d)</string>
+    <string name="play">Play</string>
 </resources>

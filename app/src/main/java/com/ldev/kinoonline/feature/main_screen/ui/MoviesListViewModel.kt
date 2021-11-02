@@ -27,7 +27,8 @@ class MoviesListViewModel(private val interactor: MoviesInteractor) : BaseViewMo
                 )
             }
             is UiEvent.OnCardMovieClick -> {
-                singleLiveEvent.value = SingleEvent.OpenMovieCard(event.movie)
+
+                singleLiveEvent.value = SingleEvent.OpenMovieCard(event.movie, previousState.movies)
             }
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(

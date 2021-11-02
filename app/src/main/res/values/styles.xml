@@ -18,7 +18,6 @@
     <style name="BoldText.Title" parent="BoldText">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/white_100</item>
-        <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
 

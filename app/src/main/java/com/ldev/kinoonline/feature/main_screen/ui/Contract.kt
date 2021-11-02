@@ -20,5 +20,5 @@ sealed class DataEvent : Event {
 }
 
 sealed class SingleEvent : Event {
-    data class OpenMovieCard(val movie: Movie) : SingleEvent()
+    data class OpenMovieCard(val movie: Movie, val similarMovies: List<Movie>) : SingleEvent()
 }

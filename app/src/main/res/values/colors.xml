@@ -43,4 +43,5 @@
     <color name="grey_200">#F7F7F7</color>
 
     <color name="transparent">#00000000</color>
+    <color name="dark_mask">#55000000</color>
 </resources>

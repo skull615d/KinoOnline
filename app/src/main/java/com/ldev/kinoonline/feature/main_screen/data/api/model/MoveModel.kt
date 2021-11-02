@@ -28,5 +28,5 @@ data class MoveModel(
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("vote_count")
-    val voteCount: Double
+    val voteCount: Int
 )

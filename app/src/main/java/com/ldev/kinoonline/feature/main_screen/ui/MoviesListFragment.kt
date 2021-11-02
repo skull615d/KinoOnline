@@ -39,7 +39,10 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         when (event) {
             is SingleEvent.OpenMovieCard -> {
                 parentFragmentManager.beginTransaction()
-                    .add(R.id.mainContainer, MovieCardFragment.newInstance(event.movie))
+                    .replace(
+                        R.id.mainContainer,
+                        MovieCardFragment.newInstance(event.movie, event.similarMovies)
+                    )
                     .addToBackStack("movies")
                     .commit()
             }

@@ -8,26 +8,40 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentMovieCardBinding
 import com.ldev.kinoonline.feature.base.loadImage
+import com.ldev.kinoonline.feature.base.toStringFormat
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 
-class MovieCardFragment: Fragment(R.layout.fragment_movie_card) {
+class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
     companion object {
         const val KEY_MOVIE = "movie"
-        fun newInstance(movie: Movie) = MovieCardFragment().apply {
-            arguments = bundleOf(Pair(KEY_MOVIE, movie))
+        const val KEY_SIMILAR_MOVIES = "similarMovies"
+        fun newInstance(movie: Movie, similarMovies: List<Movie>) = MovieCardFragment().apply {
+            arguments = bundleOf(Pair(KEY_MOVIE, movie), Pair(KEY_SIMILAR_MOVIES, similarMovies))
         }
     }
 
     private val binding by viewBinding(FragmentMovieCardBinding::bind)
-
     private val movie: Movie by lazy { requireArguments().getParcelable(KEY_MOVIE)!! }
+    private val similarMovies: List<Movie> by lazy {
+        requireArguments().getParcelable(
+            KEY_SIMILAR_MOVIES
+        )!!
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            motionContainer.transitionToEnd()
             ivImageToolbar.loadImage(movie.posterPath)
-            //toolbar.title = movie.title
-            ctToolbar.title = movie.title
+            tvTitle.text = movie.title
+            ivPoster.loadImage(movie.posterPath)
+            val year = movie.releaseDate.toStringFormat("yyyy")
+            val genres = movie.genres.map { it.name }.joinToString(", ", "", "")
+            tvDescription.text = listOf(year, genres).joinToString(" | ")
+            val overview = movie.overview + movie.overview + movie.overview + movie.overview
+            tvOverview.text = overview
+            tvVoteAverage.text =
+                getString(R.string.vote_average_count, movie.voteAverage, movie.voteCount)
         }
     }
 }

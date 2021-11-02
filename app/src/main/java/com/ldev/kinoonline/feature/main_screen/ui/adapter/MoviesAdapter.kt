@@ -38,7 +38,7 @@ class MoviesAdapter(
 
         fun bind(item: Movie) {
             binding.apply {
-                tvYear.text = item.releaseDate?.toStringFormat("yyyy") ?: ""
+                tvDescription.text = item.releaseDate?.toStringFormat("yyyy") ?: ""
                 tvVoteAverage.text = item.voteAverage.toString()
                 ivMovieImage.loadImage(item.posterPath)
                 cardView.setOnClickListener { onMovieCardClick(item) }
