@@ -45,4 +45,8 @@ class MoviesListViewModel(private val interactor: MoviesInteractor) : BaseViewMo
         }
         return null
     }
+
+    fun updateAdapter() {
+
+    }
 }

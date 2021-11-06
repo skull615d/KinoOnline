@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.ldev.kinoonline.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,5 +36,10 @@ fun String.toCalendar(dateFormat: String = "yyyy-MM-dd"): Calendar? {
 fun Calendar?.toStringFormat(format: String = "dd.MM.yyyy HH:mm"): String {
     val formatter = SimpleDateFormat(format, Locale.getDefault())
     return this?.time.let { formatter.format(it) }
+}
+
+fun <T> ListDelegationAdapter<List<T>>.updateList(list: List<T>) {
+    this.items = list
+    this.notifyDataSetChanged()
 }
 
