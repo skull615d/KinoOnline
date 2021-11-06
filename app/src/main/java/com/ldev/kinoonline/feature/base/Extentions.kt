@@ -36,3 +36,4 @@ fun Calendar?.toStringFormat(format: String = "dd.MM.yyyy HH:mm"): String {
     val formatter = SimpleDateFormat(format, Locale.getDefault())
     return this?.time.let { formatter.format(it) }
 }
+

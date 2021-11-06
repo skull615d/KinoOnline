@@ -24,7 +24,11 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
 
     private val viewModel by viewModel<MovieCardViewModel>()
     private val binding by viewBinding(FragmentMovieCardBinding::bind)
-    private val movie: Movie by lazy { requireArguments().getParcelable(KEY_MOVIE)!! }
+    private val movie: Movie by lazy(LazyThreadSafetyMode.NONE) {
+        requireArguments().getParcelable(
+            KEY_MOVIE
+        )!!
+    }
     private val similarMovies: List<Movie> by lazy {
         requireArguments().getParcelable(
             KEY_SIMILAR_MOVIES
