@@ -3,6 +3,7 @@ package com.ldev.kinoonline.feature.main_screen.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -40,13 +41,14 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
     private fun onSingleEvent(event: SingleEvent) {
         when (event) {
             is SingleEvent.OpenMovieCard -> {
-                parentFragmentManager.beginTransaction()
-                    .add(
+                parentFragmentManager.commit {
+                    addToBackStack("movies")
+                    setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left)
+                    add(
                         R.id.mainContainer,
                         MovieCardFragment.newInstance(event.movie, event.similarMovies)
                     )
-                    .addToBackStack("movies")
-                    .commit()
+                }
             }
         }
     }

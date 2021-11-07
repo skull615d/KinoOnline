@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentMovieCardBinding
@@ -39,28 +40,31 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.singleLiveEvent.observe(viewLifecycleOwner, ::onSingeEvent)
         binding.apply {
-            bPlay.setOnClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(movie.video)) }
-            motionContainer.transitionToEnd()
-            ivImageToolbar.loadImage(movie.posterPath)
-            tvTitle.text = movie.title
-            ivPoster.loadImage(movie.posterPath)
-            val year = movie.releaseDate.toStringFormat("yyyy")
-            val genres = movie.genres.map { it.name }.joinToString(", ", "", "")
-            tvDescription.text = listOf(year, genres).joinToString(" | ")
-            val overview = movie.overview + movie.overview + movie.overview + movie.overview
-            tvOverview.text = overview
-            tvVoteAverage.text =
-                getString(R.string.vote_average_count, movie.voteAverage, movie.voteCount)
+            movie.apply {
+                bPlay.setOnClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(video)) }
+                motionContainer.transitionToEnd()
+                ivImageToolbar.loadImage(posterPath)
+                tvTitle.text = title
+                ivPoster.loadImage(posterPath)
+                tvDescription.text = listOf(
+                    releaseDate.toStringFormat("yyyy"),
+                    genres.joinToString()
+                ).joinToString(" | ")
+                tvOverview.text = overview
+                tvVoteAverage.text =
+                    getString(R.string.vote_average_count, voteAverage, voteCount)
+            }
         }
     }
 
     private fun onSingeEvent(event: SingleEvent) {
         when (event) {
             is SingleEvent.OpenPlayer -> {
-                parentFragmentManager.beginTransaction()
-                    .add(R.id.mainContainer, PlayerFragment.newInstance(event.movieUrl))
-                    .addToBackStack("movieCard")
-                    .commit()
+                parentFragmentManager.commit {
+                    addToBackStack("movieCard")
+                    setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left)
+                    add(R.id.mainContainer, PlayerFragment.newInstance(event.movieUrl))
+                }
             }
             is SingleEvent.OpenMovieCard -> {
 

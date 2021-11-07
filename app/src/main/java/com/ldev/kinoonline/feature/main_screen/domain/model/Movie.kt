@@ -7,7 +7,7 @@ import java.util.*
 @Parcelize
 data class Movie(
     val adult: Boolean,
-    val genres: List<Genre>,
+    val genres: List<String>,
     val id: Int,
     val originalLanguage: String,
     val originalTitle: String,
