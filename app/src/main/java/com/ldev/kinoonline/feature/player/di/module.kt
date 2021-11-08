@@ -5,7 +5,8 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val modulePlayer = module {
-    single<SimpleExoPlayer> {
+
+single<SimpleExoPlayer> {
         SimpleExoPlayer.Builder(androidContext())
             .build()
     }

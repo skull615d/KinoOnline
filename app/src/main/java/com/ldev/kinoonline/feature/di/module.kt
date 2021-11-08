@@ -1,5 +1,8 @@
 package com.ldev.kinoonline.feature.di
 
+import com.github.terrakok.cicerone.Cicerone
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -19,5 +22,17 @@ val appModule = module {
             .baseUrl(BASE_URL)
             .client(get())
             .build()
+    }
+
+    single<Cicerone<Router>> {
+        Cicerone.create()
+    }
+
+    single<Router> {
+        get<Cicerone<Router>>().router
+    }
+
+    single<NavigatorHolder> {
+        get<Cicerone<Router>>().getNavigatorHolder()
     }
 }

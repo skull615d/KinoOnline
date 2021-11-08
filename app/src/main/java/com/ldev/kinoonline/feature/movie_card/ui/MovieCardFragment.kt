@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentMovieCardBinding
 import com.ldev.kinoonline.feature.base.loadImage
 import com.ldev.kinoonline.feature.base.toStringFormat
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
-import com.ldev.kinoonline.feature.player.ui.PlayerFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
@@ -38,7 +36,6 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.singleLiveEvent.observe(viewLifecycleOwner, ::onSingeEvent)
         binding.apply {
             movie.apply {
                 bPlay.setOnClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(video)) }
@@ -53,21 +50,6 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
                 tvOverview.text = overview
                 tvVoteAverage.text =
                     getString(R.string.vote_average_count, voteAverage, voteCount)
-            }
-        }
-    }
-
-    private fun onSingeEvent(event: SingleEvent) {
-        when (event) {
-            is SingleEvent.OpenPlayer -> {
-                parentFragmentManager.commit {
-                    addToBackStack("movieCard")
-                    setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left)
-                    add(R.id.mainContainer, PlayerFragment.newInstance(event.movieUrl))
-                }
-            }
-            is SingleEvent.OpenMovieCard -> {
-
             }
         }
     }

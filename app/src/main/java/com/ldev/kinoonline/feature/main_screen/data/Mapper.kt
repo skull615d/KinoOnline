@@ -7,24 +7,24 @@ import com.ldev.kinoonline.feature.main_screen.domain.model.Main
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 
 fun MoveModel.toDomain() = Movie(
-    adult,
-    genres.map { it.name },
-    id,
-    originalLanguage,
-    originalTitle,
-    overview,
-    releaseDate.toCalendar(),
-    posterPath,
-    popularity,
-    title,
-    video,
-    voteAverage,
-    voteCount
+    adult = adult,
+    genres = genres.map { it.name },
+    id = id,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    overview = overview,
+    releaseDate = releaseDate.toCalendar(),
+    posterPath = posterPath,
+    popularity = popularity,
+    title = title,
+    video = video,
+    voteAverage = voteAverage,
+    voteCount = voteCount
 )
 
 fun MainModel.toDomain() = Main(
-    page,
-    results.map { it.toDomain() },
-    total_pages,
-    total_results
+    page = page,
+    results = results.map { it.toDomain() },
+    totalPages = totalPages,
+    totalResults = totalResults
 )
