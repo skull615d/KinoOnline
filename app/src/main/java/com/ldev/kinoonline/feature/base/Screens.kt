@@ -7,9 +7,9 @@ import com.ldev.kinoonline.feature.movie_card.ui.MovieCardFragment
 import com.ldev.kinoonline.feature.player.ui.PlayerFragment
 
 object Screens {
-    fun MainScreen() = FragmentScreen { MoviesListFragment.newInstance() }
+    fun mainScreen() = FragmentScreen { MoviesListFragment.newInstance() }
 
-    fun MovieCard(movie: Movie, similarMovies: List<Movie>) =
+    fun movieCard(movie: Movie, similarMovies: List<Movie>) =
         FragmentScreen {
             MovieCardFragment.newInstance(
                 movie = movie,
@@ -17,5 +17,5 @@ object Screens {
             )
         }
 
-    fun Player(url: String) = FragmentScreen { PlayerFragment.newInstance(movieUrl = url) }
+    fun player(url: String) = FragmentScreen { PlayerFragment.newInstance(movieUrl = url) }
 }

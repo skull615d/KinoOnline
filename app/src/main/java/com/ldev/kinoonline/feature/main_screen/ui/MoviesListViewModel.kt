@@ -34,7 +34,7 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
                 )
             }
             is UiEvent.OnCardMovieClick -> {
-                router.navigateTo(Screens.MovieCard(event.movie, previousState.movies))
+                router.navigateTo(Screens.movieCard(event.movie, previousState.movies))
                 //singleLiveEvent.value = SingleEvent.OpenMovieCard(event.movie, previousState.movies)
             }
             is DataEvent.SuccessMoviesRequest -> {
