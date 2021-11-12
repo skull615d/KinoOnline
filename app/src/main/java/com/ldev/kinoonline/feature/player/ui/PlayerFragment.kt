@@ -10,7 +10,6 @@ import com.google.android.exoplayer2.MediaItem
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentPlayerBinding
 import com.ldev.kinoonline.feature.player.KEY_MOVIE_URL
-import org.koin.android.ext.android.inject
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
     companion object {
@@ -22,7 +21,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private val binding by viewBinding(FragmentPlayerBinding::bind)
     private val movieUrl: String by lazy { requireArguments().getString(KEY_MOVIE_URL)!! }
-    private val player by inject<ExoPlayer>()
+    private var player: ExoPlayer? = null
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
@@ -41,23 +40,24 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     }
 
     private fun initializePlayer() {
-
-        player.also {
+        player = ExoPlayer.Builder(requireContext()).build()
+        player?.also {
             binding.playerView.player = it
             val mediaItem = MediaItem.fromUri(movieUrl)
             it.setMediaItem(mediaItem)
-            /*it.playWhenReady = playWhenReady
-            it.seekTo(currentWindow, playbackPosition)*/
+            it.playWhenReady = playWhenReady
+            it.seekTo(currentWindow, playbackPosition)
             it.prepare()
         }
     }
 
     private fun releasePlayer() {
-        player.run {
-            /*playbackPosition = this.currentPosition
+        player?.run {
+            playbackPosition = this.currentPosition
             currentWindow = this.currentWindowIndex
-            playWhenReady = this.playWhenReady*/
+            playWhenReady = this.playWhenReady
             release()
         }
+        player = null
     }
 }
