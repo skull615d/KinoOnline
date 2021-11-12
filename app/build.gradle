@@ -73,7 +73,9 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     // Exoplayer
-    implementation "com.google.android.exoplayer:exoplayer:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
     // Adapter Delegate
     implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:$adapter_delegates"
     implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:$adapter_delegates"
