@@ -10,6 +10,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentPlayerBinding
 import com.ldev.kinoonline.feature.player.KEY_MOVIE_URL
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
     companion object {
@@ -21,43 +22,40 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private val binding by viewBinding(FragmentPlayerBinding::bind)
     private val movieUrl: String by lazy { requireArguments().getString(KEY_MOVIE_URL)!! }
+    private val viewModel by viewModel<PlayerViewModel>()
     private var player: ExoPlayer? = null
-    private var playWhenReady = true
-    private var currentWindow = 0
-    private var playbackPosition = 0L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /*val intent = Intent(requireContext(), BackgroundService::class.java)
         intent.putExtra(KEY_MOVIE_URL, movieUrl)
         ContextCompat.startForegroundService(requireContext(),intent)*/
-        initializePlayer()
+        player = ExoPlayer.Builder(requireContext()).build()
+        viewModel.processUiEvent(UiEvent.OnSetMediaItem(MediaItem.fromUri(movieUrl)))
+        binding.playerView.player = player
+        viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        releasePlayer()
-    }
-
-    private fun initializePlayer() {
-        player = ExoPlayer.Builder(requireContext()).build()
-        player?.also {
-            binding.playerView.player = it
-            val mediaItem = MediaItem.fromUri(movieUrl)
-            it.setMediaItem(mediaItem)
-            it.playWhenReady = playWhenReady
-            it.seekTo(currentWindow, playbackPosition)
-            it.prepare()
-        }
-    }
-
-    private fun releasePlayer() {
-        player?.run {
-            playbackPosition = this.currentPosition
-            currentWindow = this.currentWindowIndex
-            playWhenReady = this.playWhenReady
-            release()
-        }
+        viewModel.processUiEvent(
+            UiEvent.OnSaveDataPlayer(
+                player?.playWhenReady ?: true,
+                player?.currentMediaItem,
+                player?.currentPosition ?: 0L
+            )
+        )
+        player?.release()
         player = null
+    }
+
+    private fun render(viewState: ViewState) {
+        val mediaItem = viewState.mediaItem ?: MediaItem.EMPTY
+        player?.apply {
+            setMediaItem(mediaItem)
+            playWhenReady = viewState.playWhenReady
+            seekTo(viewState.playbackPosition)
+            prepare()
+        }
     }
 }
