@@ -9,7 +9,7 @@ data class ViewState(
 )
 
 sealed class UiEvent : Event {
-    data class OnPlayClick(val movieUrl: String) : UiEvent()
+    data class OnPlayClick(val movie: Movie) : UiEvent()
     data class OnMovieCardClick(val movie: Movie) : UiEvent()
 }
 

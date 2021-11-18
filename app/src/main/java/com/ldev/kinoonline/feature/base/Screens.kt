@@ -17,5 +17,6 @@ object Screens {
             )
         }
 
-    fun player(url: String) = FragmentScreen { PlayerFragment.newInstance(movieUrl = url) }
+    fun player(url: String, name: String) =
+        FragmentScreen { PlayerFragment.newInstance(movieUrl = url, movieName = name) }
 }

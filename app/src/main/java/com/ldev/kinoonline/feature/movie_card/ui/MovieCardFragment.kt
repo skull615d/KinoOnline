@@ -38,7 +38,7 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             movie.apply {
-                bPlay.setOnClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(video)) }
+                bPlay.setOnClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(movie)) }
                 motionContainer.transitionToEnd()
                 ivImageToolbar.loadImage(posterPath)
                 tvTitle.text = title

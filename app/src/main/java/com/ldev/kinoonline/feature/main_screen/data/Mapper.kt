@@ -17,7 +17,7 @@ fun MoveModel.toDomain() = Movie(
     posterPath = posterPath,
     popularity = popularity,
     title = title,
-    video = video,
+    video = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",//video,
     voteAverage = voteAverage,
     voteCount = voteCount
 )

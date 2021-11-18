@@ -15,7 +15,7 @@ class MovieCardViewModel(private val router: Router) : BaseViewModel<ViewState>(
     override suspend fun reduce(event: Event, previousState: ViewState): ViewState? {
         when (event) {
             is UiEvent.OnPlayClick -> {
-                router.navigateTo(Screens.player(event.movieUrl))
+                router.navigateTo(Screens.player(event.movie.video, event.movie.title))
             }
             is UiEvent.OnMovieCardClick -> {
                 //TODO

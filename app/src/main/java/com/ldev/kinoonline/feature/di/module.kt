@@ -3,12 +3,12 @@ package com.ldev.kinoonline.feature.di
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
+import com.ldev.kinoonline.feature.base.constants.Constants
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL = "https://gist.githubusercontent.com/"
 val appModule = module {
 
     single {
@@ -19,7 +19,7 @@ val appModule = module {
     single {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_MOVIES_URL)
             .client(get())
             .build()
     }
