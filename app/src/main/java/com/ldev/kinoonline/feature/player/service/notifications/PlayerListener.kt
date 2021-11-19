@@ -25,7 +25,7 @@ class PlayerListener(private val context: Context) :
 
         NotificationManagerCompat.from(context).apply {
             val notificationBuilder = NotificationCompat.Builder(context, notification).apply {
-                setContentTitle(PlayerService.movieName)
+                //setContentTitle(PlayerService.movieName)
                 setContentText("Movie")
                 setOngoing(ongoing)
             }
