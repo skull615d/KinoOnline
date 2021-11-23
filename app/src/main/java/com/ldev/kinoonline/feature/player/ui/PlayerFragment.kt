@@ -51,17 +51,15 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             putExtra(PlayerService.KEY_MOVIE_URL, movieUrl)
             putExtra(PlayerService.MOVIE_NAME, movieName)
         }
-        requireActivity().apply {
-            bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
-            onBackPressedDispatcher.addCallback(
-                viewLifecycleOwner,
-                object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        requireActivity().stopService(intent)
-                        viewModel.processUiEvent(UiEvent.OnBackPressed)
-                    }
-                })
-        }
+        requireActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().stopService(intent)
+                    viewModel.processUiEvent(UiEvent.OnBackPressed)
+                }
+            })
     }
 
     private fun hideSystemUi() {
@@ -85,12 +83,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     override fun onPause() {
         super.onPause()
-        requireContext().apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(intent)
-            } else {
-                requireContext().startService(intent)
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requireContext().startForegroundService(intent)
+        } else {
+            requireContext().startService(intent)
         }
         hideSystemUi()
     }

@@ -5,6 +5,5 @@
     <string name="genre">Genre: %s</string>
     <string name="vote_average_count">%.1f (%d)</string>
     <string name="play">Play</string>
-    <string name="channel_name">channel_name</string>
-    <string name="channel_desc">channel_desc</string>
+    <string name="channel_name">Player</string>
 </resources>

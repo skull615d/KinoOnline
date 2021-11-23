@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import com.ldev.kinoonline.R
 import org.koin.android.ext.android.inject
 
 class PlayerService : Service() {
@@ -24,15 +25,12 @@ class PlayerService : Service() {
         const val PLAY_PAUSE_ACTION = "PlayPauseAction"
         const val NOTIFICATION_ID = 1231
         const val CHANNEL_ID = "playerChannelId"
-        lateinit var movieName: String
     }
 
     private val exoPlayer by inject<ExoPlayer>()
     private val managerBuilder by inject<PlayerNotificationManager.Builder>()
     private var isReady = true
-    private var movieUrl: String = ""
-    private var playPosition = 0L
-    private var init = false
+    private var movieName: String = ""
     private lateinit var manager: PlayerNotificationManager
 
     private val playerNotificationListener =
@@ -56,29 +54,19 @@ class PlayerService : Service() {
                         }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         createNotificationChannel(getChannel())
+                        startForeground(notificationId, notificationBuilder.build())
                     }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        if (init) {
-                            startForeground(notificationId, notificationBuilder.build())
-                        }
-                    }
-                    //notify(notificationId, notificationBuilder.build())
                 }
             }
         }
 
     override fun onBind(intent: Intent?): IBinder {
-        init = true
         movieName = intent?.getStringExtra(MOVIE_NAME) ?: ""
-        val movieUrlNew = intent?.getStringExtra(KEY_MOVIE_URL)
+        val movieUrlNew = intent?.getStringExtra(KEY_MOVIE_URL) ?: ""
 
         exoPlayer.apply {
-            if (movieUrlNew != movieUrl) {
-                movieUrl = movieUrlNew ?: ""
-                setMediaItem(MediaItem.fromUri(movieUrl))
-            }
+            setMediaItem(MediaItem.fromUri(movieUrlNew))
             playWhenReady = isReady
-            seekTo(playPosition)
             prepare()
         }
         return PlayerServiceBinder()
@@ -92,10 +80,7 @@ class PlayerService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        manager = managerBuilder.apply {
-            setNotificationListener(playerNotificationListener)
-        }
-            .build()
+        manager = managerBuilder.setNotificationListener(playerNotificationListener).build()
         manager.setPlayer(exoPlayer)
     }
 
@@ -112,9 +97,7 @@ class PlayerService : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getChannel() = NotificationChannel(
         CHANNEL_ID,
-        "Player",
+        getString(R.string.channel_name),
         NotificationManager.IMPORTANCE_DEFAULT
-    ).apply {
-        setSound(null, null)
-    }
+    ).apply { setSound(null, null) }
 }

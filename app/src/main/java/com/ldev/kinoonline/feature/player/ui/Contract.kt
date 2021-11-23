@@ -9,7 +9,3 @@ data class ViewState(
 sealed class UiEvent : Event {
     object OnBackPressed : UiEvent()
 }
-
-sealed class DataEvent : Event {
-    data class OnPlayPressed(val url: String) : DataEvent()
-}
