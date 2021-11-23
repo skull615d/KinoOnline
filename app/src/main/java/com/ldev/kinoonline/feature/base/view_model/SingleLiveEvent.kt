@@ -1,4 +1,4 @@
-package com.ldev.kinoonline.feature.base
+package com.ldev.kinoonline.feature.base.view_model
 
 import android.util.Log
 import androidx.annotation.MainThread

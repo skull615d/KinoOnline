@@ -1,6 +1,6 @@
 package com.ldev.kinoonline.feature.movie_card.ui
 
-import com.ldev.kinoonline.feature.base.Event
+import com.ldev.kinoonline.feature.base.view_model.Event
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 
 data class ViewState(

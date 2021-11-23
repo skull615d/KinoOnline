@@ -1,4 +1,4 @@
-package com.ldev.kinoonline.feature.base
+package com.ldev.kinoonline.feature.base.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie

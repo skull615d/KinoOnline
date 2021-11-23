@@ -1,4 +1,4 @@
-package com.ldev.kinoonline.feature.base
+package com.ldev.kinoonline.feature.base.func
 
 sealed class Either<out LEFT, out RIGHT> {
 

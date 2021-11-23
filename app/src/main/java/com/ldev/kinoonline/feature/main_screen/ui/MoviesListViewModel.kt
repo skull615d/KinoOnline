@@ -1,23 +1,20 @@
 package com.ldev.kinoonline.feature.main_screen.ui
 
 import com.github.terrakok.cicerone.Router
-import com.ldev.kinoonline.feature.base.BaseViewModel
-import com.ldev.kinoonline.feature.base.Event
-import com.ldev.kinoonline.feature.base.Screens
-import com.ldev.kinoonline.feature.base.SingleLiveEvent
+import com.ldev.kinoonline.feature.base.navigation.Screens
+import com.ldev.kinoonline.feature.base.view_model.BaseViewModel
+import com.ldev.kinoonline.feature.base.view_model.Event
 import com.ldev.kinoonline.feature.main_screen.domain.MoviesInteractor
 
 class MoviesListViewModel(private val interactor: MoviesInteractor, private val router: Router) :
     BaseViewModel<ViewState>() {
-
-    val singleLiveEvent = SingleLiveEvent<SingleEvent>()
 
     init {
         processUiEvent(DataEvent.GetMovies)
     }
 
     override fun initialViewState(): ViewState {
-        return ViewState(emptyList(), true, "")
+        return ViewState(emptyList(), true, null)
     }
 
 
@@ -35,7 +32,6 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
             }
             is UiEvent.OnCardMovieClick -> {
                 router.navigateTo(Screens.movieCard(event.movie, previousState.movies))
-                //singleLiveEvent.value = SingleEvent.OpenMovieCard(event.movie, previousState.movies)
             }
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(

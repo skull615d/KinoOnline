@@ -11,7 +11,7 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
 
     private val navigatorHolder by inject<NavigatorHolder>()
-    private val navigator = object : AppNavigator(this, R.id.mainContainer) {}
+    private val navigator = AppNavigator(this, R.id.mainContainer)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
