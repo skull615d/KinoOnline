@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayerNotifiactionActivity" />
+        <activity android:name=".feature.player.service.notifications.PlayerNotificationActivity" />
         <service
             android:name=".feature.player.service.PlayerService"
             android:exported="false">

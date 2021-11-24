@@ -11,9 +11,9 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import com.ldev.kinoonline.PlayerNotifiactionActivity
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.feature.player.service.notifications.PlayerListener
+import com.ldev.kinoonline.feature.player.service.notifications.PlayerNotificationActivity
 import org.koin.android.ext.android.inject
 
 class PlayerService : Service() {
@@ -36,7 +36,7 @@ class PlayerService : Service() {
         PendingIntent.getActivity(
             applicationContext,
             REQUEST_CODE,
-            Intent(applicationContext, PlayerNotifiactionActivity::class.java),
+            Intent(applicationContext, PlayerNotificationActivity::class.java),
             PendingIntent.FLAG_IMMUTABLE
         )
     }

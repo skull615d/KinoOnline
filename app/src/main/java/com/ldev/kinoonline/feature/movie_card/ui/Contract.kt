@@ -11,6 +11,7 @@ data class ViewState(
 sealed class UiEvent : Event {
     data class OnPlayClick(val movie: Movie) : UiEvent()
     data class OnMovieCardClick(val movie: Movie) : UiEvent()
+    object OnBackClicked : UiEvent()
 }
 
 sealed class SingleEvent : Event {

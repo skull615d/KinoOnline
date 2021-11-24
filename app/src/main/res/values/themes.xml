@@ -35,7 +35,7 @@
     </style>
 
     <style name="buttonColored" parent="@style/Widget.AppCompat.Button.Colored">
-        <item name="android:textColor">?attr/colorAccented</item>
+        <item name="android:textColor">@color/black_70</item>
     </style>
 
 </resources>

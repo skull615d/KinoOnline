@@ -38,6 +38,7 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             movie.apply {
+                ivBack.setOnClickListener { viewModel.processUiEvent(UiEvent.OnBackClicked) }
                 bPlay.setOnClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(movie)) }
                 motionContainer.transitionToEnd()
                 ivImageToolbar.loadImage(posterPath)
