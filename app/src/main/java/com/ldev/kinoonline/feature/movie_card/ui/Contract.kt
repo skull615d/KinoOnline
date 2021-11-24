@@ -15,6 +15,5 @@ sealed class UiEvent : Event {
 }
 
 sealed class SingleEvent : Event {
-    data class OpenPlayer(val movieUrl: String) : SingleEvent()
     data class OpenMovieCard(val movie: Movie) : SingleEvent()
 }

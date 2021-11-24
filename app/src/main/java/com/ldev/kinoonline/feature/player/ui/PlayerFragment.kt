@@ -8,12 +8,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentPlayerBinding
+import com.ldev.kinoonline.feature.base.backPressed
 import com.ldev.kinoonline.feature.base.hideSystemUI
 import com.ldev.kinoonline.feature.base.showSystemUI
 import com.ldev.kinoonline.feature.player.service.PlayerService
@@ -60,12 +60,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         requireActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    requireActivity().stopService(intent)
-                    viewModel.processUiEvent(UiEvent.OnBackPressed)
-                }
-            })
+            backPressed {
+                requireActivity().stopService(intent)
+                viewModel.processUiEvent(UiEvent.OnBackPressed)
+            }
+        )
     }
 
     override fun onDestroy() {
@@ -75,11 +74,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     override fun onStart() {
         super.onStart()
-        hideSystemUI(requireActivity().window, binding.playerView)
-    }
-
-    override fun onPause() {
-        super.onPause()
         hideSystemUI(requireActivity().window, binding.playerView)
     }
 
