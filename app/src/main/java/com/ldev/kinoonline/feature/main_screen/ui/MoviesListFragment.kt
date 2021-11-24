@@ -16,7 +16,9 @@ import com.ldev.kinoonline.feature.main_screen.ui.adapter.moviesAdapterDelegate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
+
     companion object {
+
         fun newInstance() = MoviesListFragment()
     }
 
