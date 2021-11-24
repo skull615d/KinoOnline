@@ -8,6 +8,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentMovieCardBinding
 import com.ldev.kinoonline.feature.base.loadImage
+import com.ldev.kinoonline.feature.base.setThrottledClickListener
 import com.ldev.kinoonline.feature.base.toStringFormat
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,8 +39,8 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             movie.apply {
-                ivBack.setOnClickListener { viewModel.processUiEvent(UiEvent.OnBackClicked) }
-                bPlay.setOnClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(movie)) }
+                ivBack.setThrottledClickListener { viewModel.processUiEvent(UiEvent.OnBackClicked) }
+                bPlay.setThrottledClickListener { viewModel.processUiEvent(UiEvent.OnPlayClick(movie)) }
                 motionContainer.transitionToEnd()
                 ivImageToolbar.loadImage(posterPath)
                 tvTitle.text = title
