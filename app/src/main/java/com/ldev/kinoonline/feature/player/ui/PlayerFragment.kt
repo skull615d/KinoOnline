@@ -15,6 +15,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentPlayerBinding
 import com.ldev.kinoonline.feature.base.hideSystemUI
+import com.ldev.kinoonline.feature.base.showSystemUI
 import com.ldev.kinoonline.feature.player.service.PlayerService
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,6 +52,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             putExtra(PlayerService.KEY_MOVIE_URL, movieUrl)
             putExtra(PlayerService.MOVIE_NAME, movieName)
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requireContext().startForegroundService(intent)
+        } else {
+            requireContext().startService(intent)
+        }
         requireActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
@@ -62,10 +68,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             })
     }
 
-    private fun hideSystemUi() {
-        hideSystemUI(requireActivity().window, binding.playerView)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().unbindService(serviceConnection)
@@ -73,26 +75,16 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     override fun onStart() {
         super.onStart()
-        hideSystemUi()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        hideSystemUi()
+        hideSystemUI(requireActivity().window, binding.playerView)
     }
 
     override fun onPause() {
         super.onPause()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            requireContext().startForegroundService(intent)
-        } else {
-            requireContext().startService(intent)
-        }
-        hideSystemUi()
+        hideSystemUI(requireActivity().window, binding.playerView)
     }
 
     override fun onStop() {
         super.onStop()
-        hideSystemUi()
+        showSystemUI(requireActivity().window, binding.playerView)
     }
 }

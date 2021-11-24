@@ -119,7 +119,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bPlay"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/buttonColored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_start"

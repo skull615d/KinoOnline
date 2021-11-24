@@ -34,4 +34,8 @@
         <item name="colorSurface">?attr/colorSurfaceMain</item>
     </style>
 
+    <style name="buttonColored" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">?attr/colorAccented</item>
+    </style>
+
 </resources>

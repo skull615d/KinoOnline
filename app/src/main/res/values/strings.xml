@@ -6,4 +6,6 @@
     <string name="vote_average_count">%.1f (%d)</string>
     <string name="play">Play</string>
     <string name="channel_name">Player</string>
+    <string name="movie">Movie</string>
+    <string name="loading_error">Loading error</string>
 </resources>

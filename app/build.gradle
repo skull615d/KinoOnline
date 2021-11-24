@@ -43,15 +43,15 @@ dependencies {
     def coroutines_version = "1.5.2"
     def lifecycle_version = "2.4.0"
     def glide_version = "4.12.0"
-    def exoplayer_version = "2.16.0"
+    def exoplayer_version = "2.16.1"
     def adapter_delegates = "4.3.0"
-    def fragment_ktx = "1.3.6"
+    def fragment_ktx = "1.4.0"
     def cicerone_version = "7.1"
 
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
