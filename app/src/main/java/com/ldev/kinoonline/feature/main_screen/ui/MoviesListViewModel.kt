@@ -36,7 +36,8 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(
                     movies = event.movies,
-                    isLoading = false
+                    isLoading = false,
+                    errorMessage = null
                 )
             }
             is DataEvent.ErrorMoviesRequest -> {

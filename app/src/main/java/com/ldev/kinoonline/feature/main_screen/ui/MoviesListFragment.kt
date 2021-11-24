@@ -2,10 +2,12 @@ package com.ldev.kinoonline.feature.main_screen.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentMoviesListBinding
@@ -35,5 +37,13 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
     private fun render(viewState: ViewState) {
         moviesAdapter.updateList(viewState.movies)
+        binding.pbMovies.isGone = !viewState.isLoading
+        if (viewState.errorMessage != null) {
+            Snackbar.make(
+                binding.mainContainer,
+                getString(R.string.loading_error),
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
     }
 }

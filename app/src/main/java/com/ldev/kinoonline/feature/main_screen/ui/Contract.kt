@@ -18,7 +18,3 @@ sealed class DataEvent : Event {
     data class SuccessMoviesRequest(val movies: List<Movie>) : DataEvent()
     data class ErrorMoviesRequest(val errorMessage: String?) : DataEvent()
 }
-
-sealed class SingleEvent : Event {
-    data class OpenMovieCard(val movie: Movie, val similarMovies: List<Movie>) : SingleEvent()
-}
