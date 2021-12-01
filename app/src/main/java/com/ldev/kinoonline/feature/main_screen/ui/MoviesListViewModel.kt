@@ -20,7 +20,8 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
 
     override suspend fun reduce(event: Event, previousState: ViewState): ViewState? {
         when (event) {
-            is DataEvent.GetMovies -> {
+            is DataEvent.GetMovies, UiEvent.GetMovies -> {
+                processDataEvent(DataEvent.LoadData(true))
                 interactor.getMovies().fold(
                     onSuccess = {
                         processDataEvent(DataEvent.SuccessMoviesRequest(it.results))
@@ -44,6 +45,11 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
                 return previousState.copy(
                     isLoading = false,
                     errorMessage = event.errorMessage
+                )
+            }
+            is DataEvent.LoadData -> {
+                return previousState.copy(
+                    isLoading = event.isLoading
                 )
             }
         }

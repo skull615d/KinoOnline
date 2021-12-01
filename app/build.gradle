@@ -39,7 +39,7 @@ android {
 dependencies {
     def koin_version = "3.1.2"
     def retrofit_version = "2.9.0"
-    def view_binding_delegate_version = "1.5.1-beta01"
+    def view_binding_delegate_version = "1.5.3"
     def coroutines_version = "1.5.2"
     def lifecycle_version = "2.4.0"
     def glide_version = "4.12.0"
@@ -47,6 +47,7 @@ dependencies {
     def adapter_delegates = "4.3.0"
     def fragment_ktx = "1.4.0"
     def cicerone_version = "7.1"
+    def swipe_refresh_layout_version = "1.1.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
@@ -65,7 +66,7 @@ dependencies {
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     // Kirich's viewBinding delegate
-    implementation "com.github.kirich1409:viewbindingpropertydelegate:1.5.1-beta01"
+    implementation "com.github.kirich1409:viewbindingpropertydelegate:$view_binding_delegate_version"
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData
@@ -83,4 +84,6 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_ktx"
     // Cicerone
     implementation "com.github.terrakok:cicerone:$cicerone_version"
+    // SwipeRefreshLayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout_version"
 }

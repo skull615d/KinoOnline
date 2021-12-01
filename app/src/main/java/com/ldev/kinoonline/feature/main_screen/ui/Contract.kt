@@ -11,10 +11,12 @@ data class ViewState(
 
 sealed class UiEvent : Event {
     data class OnCardMovieClick(val movie: Movie) : UiEvent()
+    object GetMovies : UiEvent()
 }
 
 sealed class DataEvent : Event {
     object GetMovies : DataEvent()
     data class SuccessMoviesRequest(val movies: List<Movie>) : DataEvent()
     data class ErrorMoviesRequest(val errorMessage: String?) : DataEvent()
+    data class LoadData(val isLoading: Boolean) : DataEvent()
 }

@@ -2,7 +2,6 @@ package com.ldev.kinoonline.feature.main_screen.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,12 +31,17 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             adapter = moviesAdapter
         }
+        binding.srlMovies.apply {
+            setOnRefreshListener {
+                viewModel.processUiEvent(UiEvent.GetMovies)
+            }
+        }
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }
 
     private fun render(viewState: ViewState) {
         moviesAdapter.updateList(viewState.movies)
-        binding.pbMovies.isGone = !viewState.isLoading
+        binding.srlMovies.isRefreshing = viewState.isLoading
         if (viewState.errorMessage != null) {
             Snackbar.make(
                 binding.mainContainer,
