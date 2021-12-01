@@ -8,4 +8,5 @@ object Constants {
 
     // Delays
     const val DEFAULT_THROTTLE_DELAY = 200L
+    const val GET_MOVIES_DELAY = 60000L
 }

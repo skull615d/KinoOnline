@@ -1,16 +1,25 @@
 package com.ldev.kinoonline.feature.main_screen.ui
 
+import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
+import com.ldev.kinoonline.feature.base.constants.Constants
 import com.ldev.kinoonline.feature.base.navigation.Screens
 import com.ldev.kinoonline.feature.base.view_model.BaseViewModel
 import com.ldev.kinoonline.feature.base.view_model.Event
 import com.ldev.kinoonline.feature.main_screen.domain.MoviesInteractor
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MoviesListViewModel(private val interactor: MoviesInteractor, private val router: Router) :
     BaseViewModel<ViewState>() {
 
     init {
-        processUiEvent(DataEvent.GetMovies)
+        viewModelScope.launch {
+            while (true) {
+                delay(Constants.GET_MOVIES_DELAY)
+                processDataEvent(DataEvent.GetMovies)
+            }
+        }
     }
 
     override fun initialViewState(): ViewState {
@@ -20,8 +29,18 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
 
     override suspend fun reduce(event: Event, previousState: ViewState): ViewState? {
         when (event) {
-            is DataEvent.GetMovies, UiEvent.GetMovies -> {
+            is UiEvent.GetMovies -> {
                 processDataEvent(DataEvent.LoadData(true))
+                interactor.getMovies().fold(
+                    onSuccess = {
+                        processDataEvent(DataEvent.SuccessMoviesRequest(it.results))
+                    },
+                    onError = {
+                        processDataEvent(DataEvent.ErrorMoviesRequest(it.localizedMessage ?: ""))
+                    }
+                )
+            }
+            is DataEvent.GetMovies -> {
                 interactor.getMovies().fold(
                     onSuccess = {
                         processDataEvent(DataEvent.SuccessMoviesRequest(it.results))

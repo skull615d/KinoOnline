@@ -27,6 +27,7 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.processUiEvent(UiEvent.GetMovies)
         binding.rvMovies.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             adapter = moviesAdapter
