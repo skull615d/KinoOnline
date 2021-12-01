@@ -11,9 +11,9 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import com.ldev.kinoonline.MainActivity
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.feature.player.service.notifications.PlayerListener
-import com.ldev.kinoonline.feature.player.service.notifications.PlayerNotificationActivity
 import org.koin.android.ext.android.inject
 
 class PlayerService : Service() {
@@ -32,14 +32,6 @@ class PlayerService : Service() {
     private var isReady = true
     private var movieName: String = ""
     private lateinit var manager: PlayerNotificationManager
-    private val contentIntent by lazy {
-        PendingIntent.getActivity(
-            applicationContext,
-            REQUEST_CODE,
-            Intent(applicationContext, PlayerNotificationActivity::class.java),
-            PendingIntent.FLAG_IMMUTABLE
-        )
-    }
     private val playerListener: PlayerListener by lazy {
         PlayerListener(this)
     }
@@ -57,13 +49,22 @@ class PlayerService : Service() {
                 notification: Notification,
                 ongoing: Boolean
             ) {
+                val resultPendingIntent: PendingIntent = PendingIntent.getActivity(
+                    applicationContext,
+                    REQUEST_CODE,
+                    Intent(applicationContext, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    },
+                    PendingIntent.FLAG_IMMUTABLE
+                )
+
                 NotificationManagerCompat.from(applicationContext).apply {
                     val notificationBuilder =
                         NotificationCompat.Builder(applicationContext, notification).apply {
                             setContentTitle(movieName)
                             setContentText(getString(R.string.movie))
                             setOngoing(ongoing)
-                            setContentIntent(contentIntent)
+                            setContentIntent(resultPendingIntent)
                         }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         createNotificationChannel(getChannel())
