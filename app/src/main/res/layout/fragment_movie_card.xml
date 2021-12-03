@@ -82,7 +82,7 @@
         tools:text="Название" />
 
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvYear"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start"
@@ -187,7 +187,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="cvPoster,tvDescription" />
+        app:constraint_referenced_ids="cvPoster,tvYear" />
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

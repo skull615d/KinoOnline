@@ -45,7 +45,7 @@ class MovieCardFragment : Fragment(R.layout.fragment_movie_card) {
                 ivImageToolbar.loadImage(posterPath)
                 tvTitle.text = title
                 ivPoster.loadImage(posterPath)
-                tvDescription.text = listOf(
+                tvYear.text = listOf(
                     releaseDate.toStringFormat("yyyy"),
                     genres.joinToString()
                 ).joinToString(" | ")

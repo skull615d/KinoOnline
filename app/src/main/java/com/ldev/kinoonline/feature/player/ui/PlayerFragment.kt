@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.FragmentPlayerBinding
-import com.ldev.kinoonline.feature.base.backPressed
 import com.ldev.kinoonline.feature.base.hideSystemUI
+import com.ldev.kinoonline.feature.base.onBackPressed
 import com.ldev.kinoonline.feature.base.showSystemUI
 import com.ldev.kinoonline.feature.player.service.PlayerService
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -58,13 +58,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             requireContext().startService(intent)
         }
         requireActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            backPressed {
-                requireActivity().stopService(intent)
-                viewModel.processUiEvent(UiEvent.OnBackPressed)
-            }
-        )
+        requireActivity().onBackPressed(viewLifecycleOwner) {
+            requireActivity().stopService(intent)
+            viewModel.processUiEvent(UiEvent.OnBackPressed)
+        }
     }
 
     override fun onDestroy() {

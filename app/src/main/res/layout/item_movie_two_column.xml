@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     style="@style/CardView"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="4dp"
     android:layout_marginVertical="8dp"
@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -24,13 +24,31 @@
             android:layout_width="120dp"
             android:layout_height="192dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+            app:layout_constraintBottom_toTopOf="@+id/tvYear"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:elevation="1dp"
+            android:src="@drawable/ic_bookmark_border"
+            app:layout_constraintEnd_toEndOf="@+id/ivMovieImage"
+            app:layout_constraintTop_toTopOf="@+id/ivMovieImage"
+            app:tint="@color/black_70" />
+
+        <ImageView
+            android:id="@+id/ivBookmark"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintEnd_toEndOf="@+id/ivMovieImage"
+            app:layout_constraintTop_toTopOf="@+id/ivMovieImage"
+            app:tint="@color/white_80" />
+
         <TextView
-            android:id="@+id/tvDescription"
+            android:id="@+id/tvYear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/colorBackgroundFloating"

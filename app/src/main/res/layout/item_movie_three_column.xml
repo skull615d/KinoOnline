@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    style="@style/CardView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="8dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivMovieImage"
+            android:layout_width="120dp"
+            android:layout_height="192dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/tvYear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvYear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorBackgroundFloating"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingVertical="4dp"
+            android:paddingStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivMovieImage"
+            tools:text="2014" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:elevation="1dp"
+            android:src="@drawable/ic_bookmark_border"
+            app:layout_constraintEnd_toEndOf="@+id/ivMovieImage"
+            app:layout_constraintTop_toTopOf="@+id/ivMovieImage"
+            app:tint="@color/black_70" />
+
+        <ImageView
+            android:id="@+id/ivBookmark"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintEnd_toEndOf="@+id/ivMovieImage"
+            app:layout_constraintTop_toTopOf="@+id/ivMovieImage"
+            app:tint="@color/white_80" />
+
+        <ImageView
+            android:id="@+id/ivStar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvVoteAverage"
+            app:layout_constraintTop_toBottomOf="@+id/ivMovieImage" />
+
+        <TextView
+            android:id="@+id/tvVoteAverage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="4dp"
+            android:paddingEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivMovieImage"
+            tools:text="8.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

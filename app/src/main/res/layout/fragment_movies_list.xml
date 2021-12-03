@@ -6,16 +6,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvNameGroup"
+    <View
+        android:id="@+id/appBar"
+        style="@style/AppBarLayoutCustom"
         android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAppBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/Recommendations"
-        android:textAppearance="@style/H4Heading"
+        android:text="@string/kinoonline"
+        android:textAppearance="@style/Pacifico.H2"
+        app:layout_constraintBottom_toBottomOf="@+id/appBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivMosaic"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_auto_awesome_mosaic"
+        app:layout_constraintBottom_toBottomOf="@+id/appBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srlMovies"
@@ -23,13 +41,13 @@
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameGroup">
+        app:layout_constraintTop_toBottomOf="@+id/appBar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMovies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_movie_main" />
+            tools:listitem="@layout/item_movie_three_column" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 

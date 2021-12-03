@@ -13,6 +13,9 @@ import kotlinx.coroutines.launch
 class MoviesListViewModel(private val interactor: MoviesInteractor, private val router: Router) :
     BaseViewModel<ViewState>() {
 
+    private val columnMax = 3
+    private val columnMin = 1
+
     init {
         viewModelScope.launch {
             while (true) {
@@ -23,7 +26,7 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
     }
 
     override fun initialViewState(): ViewState {
-        return ViewState(emptyList(), true, null)
+        return ViewState(emptyList(), true, null, 1)
     }
 
 
@@ -70,6 +73,13 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
                 return previousState.copy(
                     isLoading = event.isLoading
                 )
+            }
+            is UiEvent.OnChangeGridClick -> {
+                return if (previousState.column < columnMax) {
+                    previousState.copy(column = previousState.column + 1)
+                } else {
+                    previousState.copy(column = columnMin)
+                }
             }
         }
         return null

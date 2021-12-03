@@ -70,7 +70,7 @@
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="0"
-                motion:motionTarget="@+id/tvDescription" />
+                motion:motionTarget="@+id/tvYear" />
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="0"
@@ -135,7 +135,7 @@
                 motion:customColorValue="?attr/colorAccented" />
         </Constraint>
         <Constraint
-            android:id="@+id/tvDescription"
+            android:id="@+id/tvYear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start"

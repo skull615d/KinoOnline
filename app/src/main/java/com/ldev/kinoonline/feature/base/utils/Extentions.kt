@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleOwner
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
@@ -42,7 +44,7 @@ fun Calendar?.toStringFormat(format: String = "dd.MM.yyyy HH:mm"): String {
 
 fun <T> ListDelegationAdapter<List<T>>.updateList(list: List<T>) {
     this.items = list
-    this.notifyDataSetChanged()
+    this.notifyItemRangeChanged(0, this.itemCount)
 }
 
 fun View.setThrottledClickListener(
@@ -66,5 +68,12 @@ fun throttle(delay: Long = Constants.DEFAULT_THROTTLE_DELAY, action: () -> Unit)
         return true
     }
     return false
+}
+
+fun FragmentActivity.onBackPressed(lifecycleOwner: LifecycleOwner, func: () -> Unit) {
+    this.onBackPressedDispatcher.addCallback(
+        lifecycleOwner,
+        backPressed { func() }
+    )
 }
 

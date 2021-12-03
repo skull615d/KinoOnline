@@ -4,6 +4,10 @@
         <item name="android:fontFamily">sans-serif-black</item>
     </style>
 
+    <style name="Pacifico">
+        <item name="android:fontFamily">@font/pacifico_regular</item>
+    </style>
+
     <style name="MediumText">
         <item name="android:fontFamily">sans-serif</item>
     </style>
@@ -13,6 +17,13 @@
         <item name="android:textColor">@color/white_80</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Pacifico.H2" parent="Pacifico">
+        <item name="android:textColor">?attr/colorAccented</item>
+        <item name="android:letterSpacing">0.0357</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="BoldText.Title" parent="BoldText">

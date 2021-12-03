@@ -27,4 +27,8 @@
 
     </style>
 
+    <style name="AppBarLayoutCustom">
+        <item name="android:background">@color/background_medium_night</item>
+    </style>
+
 </resources>
