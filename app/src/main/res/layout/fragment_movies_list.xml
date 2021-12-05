@@ -19,10 +19,9 @@
         android:layout_height="wrap_content"
         android:text="@string/kinoonline"
         android:textAppearance="@style/Pacifico.H2"
-        app:layout_constraintBottom_toBottomOf="@+id/appBar"
+        app:layout_constraintBaseline_toBottomOf="@id/ivMosaic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/ivMosaic"
@@ -34,6 +33,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <ImageView
+        android:id="@+id/ivSort"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_sort"
+        app:layout_constraintBottom_toBottomOf="@+id/appBar"
+        app:layout_constraintEnd_toStartOf="@+id/ivMosaic"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srlMovies"

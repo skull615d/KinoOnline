@@ -6,27 +6,34 @@ import com.ldev.kinoonline.feature.base.constants.Constants
 import com.ldev.kinoonline.feature.base.navigation.Screens
 import com.ldev.kinoonline.feature.base.view_model.BaseViewModel
 import com.ldev.kinoonline.feature.base.view_model.Event
+import com.ldev.kinoonline.feature.base.view_model.SingleLiveEvent
+import com.ldev.kinoonline.feature.base.view_model.Sorting
 import com.ldev.kinoonline.feature.main_screen.domain.MoviesInteractor
+import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MoviesListViewModel(private val interactor: MoviesInteractor, private val router: Router) :
     BaseViewModel<ViewState>() {
 
-    private val columnMax = 3
-    private val columnMin = 1
+    companion object {
+        const val COLUMN_MAX = 3
+        const val COLUMN_MIN = 1
+    }
 
     init {
         viewModelScope.launch {
             while (true) {
-                delay(Constants.GET_MOVIES_DELAY)
                 processDataEvent(DataEvent.GetMovies)
+                delay(Constants.GET_MOVIES_DELAY)
             }
         }
     }
 
+    val singleLiveEvent = SingleLiveEvent<SingleEvent>()
+
     override fun initialViewState(): ViewState {
-        return ViewState(emptyList(), true, null, 1)
+        return ViewState(emptyList(), true, null, 1, sorted = null)
     }
 
 
@@ -58,7 +65,7 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
             }
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(
-                    movies = event.movies,
+                    movies = sortedMovies(previousState.sorted, event.movies),
                     isLoading = false,
                     errorMessage = null
                 )
@@ -75,13 +82,58 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
                 )
             }
             is UiEvent.OnChangeGridClick -> {
-                return if (previousState.column < columnMax) {
+                return if (previousState.column < COLUMN_MAX) {
                     previousState.copy(column = previousState.column + 1)
                 } else {
-                    previousState.copy(column = columnMin)
+                    previousState.copy(column = COLUMN_MIN)
                 }
+            }
+            is UiEvent.OnSortClick -> {
+                singleLiveEvent.value = SingleEvent.ShowPopupMenu
+            }
+            is UiEvent.OnSortDateClick -> {
+                return previousState.copy(
+                    sorted = SortedBy.Date,
+                    movies = sortedMovies(SortedBy.Date, previousState.movies)
+                )
+            }
+            is UiEvent.OnSortNameClick -> {
+                return previousState.copy(
+                    sorted = SortedBy.Name,
+                    movies = sortedMovies(SortedBy.Name, previousState.movies)
+                )
+            }
+            is UiEvent.OnSortPopularityClick -> {
+                return previousState.copy(
+                    sorted = SortedBy.Popularity,
+                    movies = sortedMovies(SortedBy.Popularity, previousState.movies)
+                )
+            }
+            is UiEvent.OnSortRatingClick -> {
+                return previousState.copy(
+                    sorted = SortedBy.Rating,
+                    movies = sortedMovies(SortedBy.Rating, previousState.movies)
+                )
             }
         }
         return null
+    }
+
+    private fun sortedMovies(sorting: Sorting?, list: List<Movie>): List<Movie> {
+        return when (sorting) {
+            is SortedBy.Date -> {
+                list.sortedByDescending { it.releaseDate }
+            }
+            is SortedBy.Name -> {
+                list.sortedBy { it.title }
+            }
+            is SortedBy.Popularity -> {
+                list.sortedByDescending { it.popularity }
+            }
+            is SortedBy.Rating -> {
+                list.sortedByDescending { it.voteAverage }
+            }
+            else -> list
+        }
     }
 }

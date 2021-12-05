@@ -3,6 +3,7 @@ package com.ldev.kinoonline.feature.main_screen.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ldev.kinoonline.R
 import com.ldev.kinoonline.databinding.ItemMovieOneColumnBinding
 import com.ldev.kinoonline.feature.base.loadImage
 import com.ldev.kinoonline.feature.base.setThrottledClickListener
@@ -20,8 +21,13 @@ class OneColumnViewHolder(private val binding: ItemMovieOneColumnBinding) :
         binding.apply {
             cardView.setThrottledClickListener { onMovieClick(item) }
             tvYear.text = item.releaseDate?.toStringFormat("yyyy") ?: ""
-            tvVoteAverage.text = item.voteAverage.toString()
+            tvVoteAverage.text = root.resources.getString(
+                R.string.vote_average_count,
+                item.voteAverage,
+                item.voteCount
+            )
             tvDescription.text = item.overview
+            tvPopularity.text = root.resources.getString(R.string.popularity, item.popularity)
             ivMovieImage.loadImage(item.posterPath)
             tvName.text = item.title
         }
