@@ -7,9 +7,7 @@ import com.ldev.kinoonline.feature.base.navigation.Screens
 import com.ldev.kinoonline.feature.base.view_model.BaseViewModel
 import com.ldev.kinoonline.feature.base.view_model.Event
 import com.ldev.kinoonline.feature.base.view_model.SingleLiveEvent
-import com.ldev.kinoonline.feature.base.view_model.Sorting
 import com.ldev.kinoonline.feature.main_screen.domain.MoviesInteractor
-import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -33,7 +31,13 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
     val singleLiveEvent = SingleLiveEvent<SingleEvent>()
 
     override fun initialViewState(): ViewState {
-        return ViewState(emptyList(), true, null, 1, sorted = null)
+        return ViewState(
+            movies = emptyList(),
+            isLoading = true,
+            errorMessage = null,
+            column = COLUMN_MIN,
+            sorted = null
+        )
     }
 
 
@@ -65,7 +69,7 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
             }
             is DataEvent.SuccessMoviesRequest -> {
                 return previousState.copy(
-                    movies = sortedMovies(previousState.sorted, event.movies),
+                    movies = event.movies.sortedMovies(previousState.sorted),
                     isLoading = false,
                     errorMessage = null
                 )
@@ -94,46 +98,28 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
             is UiEvent.OnSortDateClick -> {
                 return previousState.copy(
                     sorted = SortedBy.Date,
-                    movies = sortedMovies(SortedBy.Date, previousState.movies)
+                    movies = previousState.movies.sortedMovies(SortedBy.Date)
                 )
             }
             is UiEvent.OnSortNameClick -> {
                 return previousState.copy(
                     sorted = SortedBy.Name,
-                    movies = sortedMovies(SortedBy.Name, previousState.movies)
+                    movies = previousState.movies.sortedMovies(SortedBy.Name)
                 )
             }
             is UiEvent.OnSortPopularityClick -> {
                 return previousState.copy(
                     sorted = SortedBy.Popularity,
-                    movies = sortedMovies(SortedBy.Popularity, previousState.movies)
+                    movies = previousState.movies.sortedMovies(SortedBy.Popularity)
                 )
             }
             is UiEvent.OnSortRatingClick -> {
                 return previousState.copy(
                     sorted = SortedBy.Rating,
-                    movies = sortedMovies(SortedBy.Rating, previousState.movies)
+                    movies = previousState.movies.sortedMovies(SortedBy.Rating)
                 )
             }
         }
         return null
-    }
-
-    private fun sortedMovies(sorting: Sorting?, list: List<Movie>): List<Movie> {
-        return when (sorting) {
-            is SortedBy.Date -> {
-                list.sortedByDescending { it.releaseDate }
-            }
-            is SortedBy.Name -> {
-                list.sortedBy { it.title }
-            }
-            is SortedBy.Popularity -> {
-                list.sortedByDescending { it.popularity }
-            }
-            is SortedBy.Rating -> {
-                list.sortedByDescending { it.voteAverage }
-            }
-            else -> list
-        }
     }
 }
