@@ -7,7 +7,9 @@ import com.ldev.kinoonline.feature.base.navigation.Screens
 import com.ldev.kinoonline.feature.base.view_model.BaseViewModel
 import com.ldev.kinoonline.feature.base.view_model.Event
 import com.ldev.kinoonline.feature.base.view_model.SingleLiveEvent
+import com.ldev.kinoonline.feature.base.view_model.Sorting
 import com.ldev.kinoonline.feature.main_screen.domain.MoviesInteractor
+import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -121,5 +123,23 @@ class MoviesListViewModel(private val interactor: MoviesInteractor, private val 
             }
         }
         return null
+    }
+
+    private fun List<Movie>.sortedMovies(sorting: Sorting?): List<Movie> {
+        return when (sorting) {
+            is SortedBy.Date -> {
+                this.sortedByDescending { it.releaseDate }
+            }
+            is SortedBy.Name -> {
+                this.sortedBy { it.title }
+            }
+            is SortedBy.Popularity -> {
+                this.sortedByDescending { it.popularity }
+            }
+            is SortedBy.Rating -> {
+                this.sortedByDescending { it.voteAverage }
+            }
+            else -> this
+        }
     }
 }

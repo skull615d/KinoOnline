@@ -26,7 +26,7 @@ class SimpleAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolder).bind(list[position], onMovieClick)
+        (holder as BindedViewHolder).bind(list[position], onMovieClick)
     }
 
     override fun getItemCount(): Int {

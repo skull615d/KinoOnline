@@ -10,7 +10,7 @@ import com.ldev.kinoonline.feature.base.toStringFormat
 import com.ldev.kinoonline.feature.main_screen.domain.model.Movie
 
 class ThreeColumnViewHolder(private val binding: ItemMovieThreeColumnBinding) :
-    RecyclerView.ViewHolder(binding.root), ViewHolder {
+    RecyclerView.ViewHolder(binding.root), BindedViewHolder {
     constructor(parent: ViewGroup) : this(
         ItemMovieThreeColumnBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
