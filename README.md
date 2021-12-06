@@ -14,20 +14,22 @@ KinoOnline supports two themes - Light and Dark. You can toggle it in your smart
 
 ## Screens
 ### Main Screen
-On the main screen you will see several movie cards that you can scroll vertically and group by columns.<br>
+On the main screen you will see several movie cards that you can scroll vertically, sorted and group by columns.<br>
 Tap on the movie card to open _About Movie Screen_. <br>
 You can see it in demo section below in the _Demo_. <br>
 ![](readmeFiles/mainscreen.gif)
 
 ### About Movie Screen
-On the _About Movie Screen_ you will see film poster, genres, year of release and overview <br>
+On the _About Movie Screen_ you will see film poster, genres, year of release, rating and overview.<br>
 Tap on the play icon to open _Video Player Screen_.<br>
 ![](readmeFiles/about_screen.gif)
 
 ### Video Player Screen
-On the _Video Player Screen_ you will watch selected movie in full screen mode. <br>
-![](readmeFiles/cion_player_screen.gif)
+On the _Video Player Screen_ you will watch selected movie in full screen mode.<br>
+You can hide the video and it will continue playing in the background.<br>
+By clicking on the notification, you can return to _Video Player Screen_. <br>
+![](readmeFiles/player_screen.gif)
 
 ## Demo
-Below you can see a demo of CiOn application. <br>
-![](readmeFiles/cion_demo.gif)
+Below you can see a demo of KinoOnline application. <br>
+![](readmeFiles/demo.gif)
